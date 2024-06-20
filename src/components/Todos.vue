@@ -3,11 +3,22 @@ import '@/assets/main.css';
 import { onMounted, ref } from 'vue';
 import type { Schema } from '../../amplify/data/resource';
 import { generateClient } from 'aws-amplify/data';
+import { getUrl } from 'aws-amplify/storage';
 
 const client = generateClient<Schema>();
 
 // create a reactive reference to the array of todos
 const todos = ref<Array<Schema['Todo']["type"]>>([]);
+
+
+const linkToStorageFile = await getUrl({
+  path: "katalog/UNILED_katalog_2024.pdf",
+  options: {
+    validateObjectExistence: false,
+    expiresIn: 900,
+    useAccelerateEndpoint: false,
+  },
+});
 
 function listTodos() {
   client.models.Todo.observeQuery().subscribe({
@@ -55,5 +66,10 @@ function createTodo() {
       <br/>
       <button>Download katalog</button>
     </div>
+    <br/>
+    <h2>Skust tlacidlo nizsie pre stiahnutie aktualneho katalogu</h2>
+    <a href={linkToStorageFile.url.toString()} target="_blank" rel="noreferrer">
+      {fileName}
+    </a>
   </main>
 </template>
