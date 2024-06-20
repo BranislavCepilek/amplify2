@@ -51,5 +51,9 @@ function createTodo() {
         Review next steps of this tutorial.
       </a>
     </div>
+    <div>
+      <br/>
+      <button>Download katalog</button>
+    </div>
   </main>
 </template>
